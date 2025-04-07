@@ -4,6 +4,11 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any, List, Union
 import json
 import inspect
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Initialize session state for messages and agent
 if 'messages' not in st.session_state:
@@ -15,10 +20,18 @@ if 'agent' not in st.session_state:
 # OpenAI client setup
 @st.cache_resource
 def get_client():
+    api_key = os.environ.get("OPENAI_API_KEY")
+    base_url = os.environ.get("BASE_URL", "https://api.chatanywhere.tech/v1")
+    
+    if not api_key:
+        st.error("OpenAI API key not found. Please check your .env file.")
+        st.stop()
+    
     return OpenAI(
-        api_key="sk-Q1zNx1vI7ciojsGb4tqbhh9RMMvnpwgDE4KAeCrjhHVaVuiJ",
-        base_url="https://api.chatanywhere.tech/v1"
+        api_key=api_key,
+        base_url=base_url
     )
+
 
 client = get_client()
 
