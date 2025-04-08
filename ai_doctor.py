@@ -16,17 +16,22 @@ if 'agent' not in st.session_state:
 # OpenAI client setup
 @st.cache_resource
 def get_client():
-    api_key = st.secrets["OPENAI_API_KEY"]
-    base_url = st.secrets["BASE_URL"] 
-    
-    if not api_key:
-        st.error("OpenAI API key not found. Please check your .env file.")
+    try:
+        api_key = st.secrets["OPENAI_API_KEY"]
+        base_url = st.secrets["BASE_URL"] 
+        
+        if not api_key:
+            st.error("OpenAI API key not found. Please check your .env file.")
+            st.stop()
+        
+        return OpenAI(
+            api_key=api_key,
+            base_url=base_url
+        )
+    except Exception as e:
+        st.error(f"Error accessing Streamlit secrets: {str(e)}")
+        st.error("Please ensure your .streamlit/secrets.toml file is properly configured.")
         st.stop()
-    
-    return OpenAI(
-        api_key=api_key,
-        base_url=base_url
-    )
 
 
 client = get_client()
