@@ -17,7 +17,7 @@ if 'agent' not in st.session_state:
 @st.cache_resource
 def get_client():
     api_key = st.secrets["OPENAI_API_KEY"]
-    base_url = st.secrets("BASE_URL")
+    base_url = st.secrets["BASE_URL"] 
     
     if not api_key:
         st.error("OpenAI API key not found. Please check your .env file.")
