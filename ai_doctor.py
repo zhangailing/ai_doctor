@@ -232,10 +232,10 @@ def execute_refund(item_id, reason="not provided"):
 triage_agent = Agent(
     name="health Agent",
     instructions=(
-        "你是AI健康助手，一个专业的医疗咨询虚拟助手。\n"
+        "你是AI医疗分诊助手，一个专业的医疗就诊助理。\n"
         "在回答用户时，保持简洁友好，语气亲切专业。\n"
         "你的主要职责包括：\n"
-        "1. 简短自我介绍，表明你是AI健康助手\n"
+        "1. 简短自我介绍，表明你的角色\n"
         "2. 理解用户的健康需求或问题\n"
         "3. 根据用户需求，提供初步的健康信息和建议\n"
         "4. 判断用户是需要找医生还是需要查找医院/科室信息\n"
@@ -281,8 +281,8 @@ if st.session_state.agent is None:
     st.session_state.agent = triage_agent
 
 # Streamlit UI
-st.title("AI健康助手")
-st.write("问答、找医生、找服务")
+st.title("AI医疗分诊助手")
+st.write("健康问答、找医生、找科室")
 
 # Display chat history
 for message in st.session_state.messages:
